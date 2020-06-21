@@ -182,9 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return new GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () async {
-        AudioPlayer player =
-            await sucessCachePlayer.play("audio/" + tone.roman + ".mp3");
-        player.release();
+        await sucessCachePlayer.play("audio/" + tone.roman + ".mp3");
       },
       child: new Container(
 //        child: new Column(
