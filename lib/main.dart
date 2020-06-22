@@ -50,6 +50,10 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: '50音图'),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        platform: TargetPlatform.iOS,
+      ),
     );
   }
 }
@@ -76,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: MediaQuery.of(context).platformBrightness == Brightness.dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       child: Material(
         child: Scaffold(
           appBar: new MainAppBar(),
@@ -95,14 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 GridView.count(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  //水平子Widget之间间距
-                  crossAxisSpacing: 10.0,
-                  //垂直子Widget之间间距
-                  mainAxisSpacing: 20.0,
                   //一行的Widget数量
                   crossAxisCount: 5,
 //                  childAspectRatio: 8 / 10,
-                  childAspectRatio: 10 / 8,
+                  childAspectRatio: 1,
                   //子Widget列表
                   padding: EdgeInsets.all(20),
                   children: _getWidgetList(),
@@ -179,12 +179,15 @@ class _MyHomePageState extends State<MyHomePage> {
   AudioCache sucessCachePlayer = new AudioCache();
 
   _getSingleWidget(Tone tone) {
-    return new GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return new InkWell(
+//      behavior: HitTestBehavior.opaque,
       onTap: () async {
-        await sucessCachePlayer.play("audio/" + tone.roman + ".mp3");
+        if(tone.roman != null && tone.roman != "") {
+          await sucessCachePlayer.play("audio/" + tone.roman + ".mp3");
+        }
       },
       child: new Container(
+//        alignment: Alignment.center,
 //        child: new Column(
 //          children: <Widget>[
 //            new Container(
@@ -209,6 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //        ),
         child: new Container(
           alignment: Alignment.center,
+          padding: EdgeInsets.all(10),
           child: new Column(
             children: <Widget>[
               new Row(
