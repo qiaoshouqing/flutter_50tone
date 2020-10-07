@@ -50,6 +50,7 @@ class ScreenUtil {
   static double radToDeg(num rad) => rad * (180.0 / pi);
 
   static double getStatusBarHeight() => MediaQueryData.fromWindow(window).padding.top;
+  static double getNavigationBarHeight() => MediaQueryData.fromWindow(window).padding.bottom;
   static double getScreenWidth() => screenWidthDp;
   static double getScreenHeight() => screenHeightDp;
 
